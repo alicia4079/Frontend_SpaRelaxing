@@ -7,9 +7,12 @@ const App = () => {
   const { isAuthenticated, logout } = useAuth(); 
   const [menuOpen, setMenuOpen] = useState(false); 
 
-
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
+  };
+
+  const closeMenu = () => {
+    setMenuOpen(false);
   };
 
   return (
@@ -22,33 +25,33 @@ const App = () => {
           <img src="./menu.png" alt="menu" />
         </button>
         <nav className={menuOpen ? 'nav-menu open' : 'nav-menu'}>
-          <NavLink to="/spas" style={({ isActive }) => ({
+          <NavLink to="/spas" onClick={closeMenu} style={({ isActive }) => ({
             textDecoration: 'none', color: isActive ? 'var(--accent-100)' : 'inherit'
           })}>
             Nuestros spas
           </NavLink>
-          <NavLink to="/fares" style={({ isActive }) => ({
+          <NavLink to="/fares" onClick={closeMenu} style={({ isActive }) => ({
             textDecoration: 'none', color: isActive ? 'var(--accent-100)' : 'inherit'
           })}>
             Nuestros precios
           </NavLink>
           {isAuthenticated ? (
-            <button onClick={logout} style={{ textDecoration: 'none', color: 'inherit', border: 'none', background: 'none', cursor: 'pointer' }}>
+            <button onClick={() => { logout(); closeMenu(); }} style={{ textDecoration: 'none', color: 'inherit', border: 'none', background: 'none', cursor: 'pointer' }}>
               Desconéctate
             </button>
           ) : (
-            <NavLink to="/login" style={({ isActive }) => ({
+            <NavLink to="/login" onClick={closeMenu} style={({ isActive }) => ({
               textDecoration: 'none', color: isActive ? 'var(--accent-100)' : 'inherit'
             })}>
               Conéctate
             </NavLink>
           )}
-          <NavLink to="/client" style={({ isActive }) => ({
+          <NavLink to="/client" onClick={closeMenu} style={({ isActive }) => ({
             textDecoration: 'none', color: isActive ? 'var(--accent-100)' : 'inherit'
           })}>
             Tu área
           </NavLink>
-          <NavLink to="/contact" style={({ isActive }) => ({
+          <NavLink to="/contact" onClick={closeMenu} style={({ isActive }) => ({
             textDecoration: 'none', color: isActive ? 'var(--accent-100)' : 'inherit'
           })}>
             Contáctanos
