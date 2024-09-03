@@ -1,0 +1,87 @@
+#spas h2 {
+  font-size: 50px;
+  font-weight: 500;
+  color: var(--bg-400);
+  margin: var(--rtc-margin-m);
+  text-shadow: 2px 2px 5px var(--bg-600);
+}
+#spas {
+  padding: var(--rtc-margin-s);
+  min-height: 75svh;
+  width: 78svw;
+  text-align: center;
+}
+
+.spa-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 40px;
+  margin-top: 10px;
+}
+
+.spa-card {
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: var(--bg-200);
+}
+
+.spa-card h3 {
+  font-size: 1.2rem;
+}
+
+.spa-card p {
+  padding: 0 5px;
+  font-size: 1rem;
+  color: var(--text-200);
+}
+.spa-image-container {
+  width: 100%;
+  height: 150px;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.spa-image {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.spa-card:hover .spa-image {
+  transform: scale(1.05);
+}
+
+@media (max-width: 1000px) {
+  #spas h2 {
+    font-size: 40px;
+    margin: var(--rtc-margin-s);
+  }
+}
+
+@media (max-width: 700px) {
+  #spas h2 {
+    font-size: 32px;
+    margin: var(--rtc-margin-xs);
+  }
+}
+
+@media (max-width: 500px) {
+  .spa-card p {
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 400px) {
+  .spa-card p {
+    font-size: 10px;
+  }
+  #spas h2 {
+    font-size: 30px;
+  }
+}

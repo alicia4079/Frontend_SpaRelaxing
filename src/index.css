@@ -1,0 +1,77 @@
+@import url('https://fonts.googleapis.com/css2?family=Catamaran:wght@100..900&family=Lobster&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Catamaran:wght@100..900&family=Merienda:wght@300..900&family=Zeyada&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Catamaran', sans-serif;
+  list-style: none;
+  text-decoration: none;
+}
+
+:root {
+  --rtc-margin-xs: 10px;
+  --rtc-margin-s: 20px;
+  --rtc-margin-m: 30px;
+  --rtc-margin-l: 40px;
+  --rtc-margin-xl: 50px;
+  --rtc-margin-xxl: 60px;
+
+  --rtc-padding-xs: 10px;
+  --rtc-padding-s: 20px;
+  --rtc-padding-m: 30px;
+  --rtc-padding-l: 40px;
+  --rtc-padding-xl: 50px;
+  --rtc-padding-xxl: 60px;
+
+  --rtc-gap-xs: 10px;
+  --rtc-gap-s: 20px;
+  --rtc-gap-m: 30px;
+  --rtc-gap-l: 40px;
+  --rtc-gap-xl: 50px;
+  --rtc-gap-xxl: 60px;
+  --rtc-border-radius: 20px;
+
+  --primary-100: #519889;
+  --primary-200: #26685ee7;
+  --accent-100: #f1d954;
+  --accent-200: #fbdb28;
+  --text-100: #333333;
+  --text-200: #5c5c5c;
+  --bg-100: #fff;
+  --bg-200: #e6e6e6;
+  --bg-300: hsl(48, 86%, 70%);
+  --bg-400: hsl(39, 70%, 70%);
+  --bg-500: #c9956b;
+  --bg-600: black;
+  --buttom: #0056b3;
+  --green: #77b300;
+}
+
+body {
+  min-height: 100svh;
+  background-color: var(--bg-500);
+  background-image: url('https://www.transparenttextures.com/patterns/silver-scales.png');
+  overflow-x: hidden;
+}
+
+a,
+h1,
+h2,
+h3,
+h4,
+label,
+p {
+  color: var(--text-100);
+}
+
+nav a,
+nav button {
+  font-size: 24px;
+  color: inherit;
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: inline-block;
+}
