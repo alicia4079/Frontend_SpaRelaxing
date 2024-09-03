@@ -12,7 +12,6 @@ const Login = () => {
     return (
       <div className="login-container">
         <div className="welcome-message">{welcomeMessage}</div>
-        <a href="/client">Ve a tu área</a>
       </div>
     );
   }
