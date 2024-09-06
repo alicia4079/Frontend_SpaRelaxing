@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom'; 
 import { useAuth } from '../../customHooks/AuthContext';
 import useSpas from '../../customHooks/useSpas';
 import './Client.css';
@@ -24,7 +25,7 @@ const Client = () => {
     return (
       <div className='no-costumer-alert'>
         <h2>Ups, parece que no tienes ninguna tarifa con nosotros.</h2>
-        <a href="/fares">Mira nuestros precios</a>
+        <Link to="/fares">Mira nuestros precios</Link> 
       </div>
     );
   }
@@ -76,6 +77,7 @@ const Client = () => {
 };
 
 export default Client;
+
 
 
 

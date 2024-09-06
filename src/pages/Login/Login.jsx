@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom'; 
 import useLoginHandler from '../../customHooks/useLoginHandler';
 import { useAuth } from '../../customHooks/AuthContext';
 import Form from '../../components/Form/Form';
@@ -21,7 +22,7 @@ const Login = () => {
       <Form onSubmit={handleLogin} />
       {errorMessage && <div className="error-message">{errorMessage}</div>}
       <div className="register-link">
-        <p>¿No tienes una cuenta? <a href="/register">Regístrate aquí</a></p>
+        <p>¿No tienes una cuenta? <Link to="/register">Regístrate aquí</Link></p> 
       </div>
     </div>
   );
