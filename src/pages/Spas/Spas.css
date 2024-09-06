@@ -2,12 +2,12 @@
   font-size: 50px;
   font-weight: 500;
   color: var(--bg-400);
-  margin: var(--rtc-margin-m);
+  margin: var(--rtc-margin-s);
   text-shadow: 2px 2px 5px var(--bg-600);
 }
 #spas {
   padding: var(--rtc-margin-s);
-  min-height: 75svh;
+  min-height: 70svh;
   width: 78svw;
   text-align: center;
 }

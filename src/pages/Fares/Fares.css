@@ -31,15 +31,10 @@
   flex: 1;
   margin: 15px 5px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  transition: 0.5s;
   cursor: pointer;
   gap: 20px;
   min-width: 200px;
   max-width: 300px;
-}
-
-.price-column:hover {
-  scale: 1.1;
 }
 
 .price-column h3 {

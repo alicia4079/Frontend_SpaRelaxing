@@ -1,5 +1,5 @@
 import { NavLink, Outlet } from 'react-router-dom';
-import React, { useState } from 'react'; 
+import React, { useState, useEffect } from 'react'; 
 import { useAuth } from './customHooks/AuthContext';
 import './App.css';
 
@@ -14,6 +14,20 @@ const App = () => {
   const closeMenu = () => {
     setMenuOpen(false);
   };
+
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth > 768) { 
+        closeMenu(); 
+      }
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
 
   return (
     <div className='App'>

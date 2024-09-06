@@ -1,5 +1,9 @@
 .loading-container {
   width: 100px;
+  min-height: 85svh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .loading-container img {
   width: 100%;
