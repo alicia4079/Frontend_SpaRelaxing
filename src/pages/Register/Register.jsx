@@ -31,10 +31,10 @@ const Register = () => {
 
       await handleLogin({ userName: data.userName, password: data.password });
 
-      setSuccessMessage('Registro y login exitosos. Redirigiendo...');
+      setSuccessMessage('Registro y login exitosos. Redirigiendo a tu área');
       setErrorMessage('');
 
-      setTimeout(() => navigate('/client'), 1000);
+      setTimeout(() => navigate('/client'), 4000);
       
     } catch (error) {
       console.error('Error:', error.message);
@@ -53,7 +53,10 @@ const Register = () => {
             <input
               type="text"
               id="userName"
-              {...register('userName', { required: 'El nombre de usuario es obligatorio' })}
+              {...register('userName', {  required: 'El nombre de usuario es obligatorio',
+                pattern: { 
+                  value: /^[a-zA-Z0-9._-]{3,20}$/, 
+                  message: 'El nombre de usuario debe tener entre 3 y 20 caracteres y solo puede contener letras, números, ,puntos, guiones o guiones bajos'  } })}
             />
             {errors.userName && <p className="error-message">{errors.userName.message}</p>}
           </div>
@@ -64,7 +67,7 @@ const Register = () => {
               id="email"
               {...register('email', { 
                 required: 'El correo electrónico es obligatorio',
-                pattern: { value: /^[^@]+@[^@]+\.[a-zA-Z]{2,}$/, message: 'Ingrese un correo válido' } 
+                pattern: { value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, message: 'Ingrese un correo válido' }
               })}
             />
             {errors.email && <p className="error-message">{errors.email.message}</p>}

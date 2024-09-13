@@ -71,9 +71,9 @@
 }
 
 .success-message {
-  font-size: 20px;
+  font-size: 16px;
   color: var(--green);
-  margin-bottom: 20px;
+  text-align: center;
 }
 
 @media (max-width: 500px) {

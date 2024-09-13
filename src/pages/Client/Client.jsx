@@ -10,7 +10,7 @@ const Client = () => {
   const { spas, error: spasError } = useSpas();
   const {
     customers,
-    error,
+    message,
     isEditing,
     currentCustomer,
     formData,
@@ -30,8 +30,13 @@ const Client = () => {
     );
   }
 
-  if (error || spasError) {
-    return <div>Error: {error || spasError}</div>;
+  if (message || spasError) {
+    return (
+      <div className='no-costumer-alert'>
+        <h2>{message || spasError}</h2>
+        <Link to="/fares">Consulta nuestros precios</Link> 
+      </div>
+    );
   }
 
   return (
@@ -47,11 +52,11 @@ const Client = () => {
             <input type="text" name="phone" value={formData.phone} onChange={handleFormChange} placeholder="Teléfono" required />
             <input type="number" name="fare" value={formData.fare} onChange={handleFormChange} placeholder="Tarifa" required />
             <select name="spa" value={formData.spa} onChange={handleFormChange} required>
-              <option value="">Selecciona un Spa</option>
-              {spas.map(spa => (
-                <option key={spa._id} value={spa._id}>{spa.name}</option>
-              ))}
-            </select>
+  <option value="">Selecciona un Spa</option>
+  {spas.map(spa => (
+    <option key={spa._id} value={spa._id}>{spa.name}</option>
+  ))}
+</select>
             <button type="submit">{isEditing ? 'Guardar Cambios' : 'Añadir Cliente'}</button>
           </form>
         </div>
@@ -77,6 +82,11 @@ const Client = () => {
 };
 
 export default Client;
+
+
+
+
+
 
 
 

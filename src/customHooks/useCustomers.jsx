@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 
 const useCustomers = (user, isAuthenticated) => {
   const [customers, setCustomers] = useState([]);
-  const [error, setError] = useState(null);
+  const [message, setMessage] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
   const [currentCustomer, setCurrentCustomer] = useState(null);
   const [formData, setFormData] = useState({
@@ -17,7 +17,7 @@ const useCustomers = (user, isAuthenticated) => {
   useEffect(() => {
     const fetchCustomerData = async () => {
       if (!user || !user.email) {
-        setError('Email del usuario no disponible');
+        setMessage('Email del usuario no disponible');
         return;
       }
 
@@ -39,14 +39,24 @@ const useCustomers = (user, isAuthenticated) => {
         });
 
         if (!response.ok) {
-          throw new Error('Error al obtener los datos del cliente');
+          const errorText = await response.text();
+          if (response.status === 404 && errorText.includes('Cliente no encontrado')) {
+            setMessage('Aún no tienes ningún paquete contratado.');
+            setCustomers([]);
+            return;
+          }
+          throw new Error(`Error al obtener los datos del cliente: ${errorText}`);
         }
 
         const customerResult = await response.json();
         setCustomers(Array.isArray(customerResult) ? customerResult : [customerResult]);
+        setMessage(null);
+
       } catch (err) {
-        console.error('Error en la solicitud:', err);
-        setError(err.message);
+        if (!err.message.includes('Cliente no encontrado')) {
+          console.error('Error en la solicitud:', err);
+        }
+        setMessage(err.message || 'Error desconocido al obtener los datos del cliente');
       }
     };
 
@@ -54,7 +64,7 @@ const useCustomers = (user, isAuthenticated) => {
       fetchCustomerData();
     } else {
       setCustomers([]);
-      setError(null);
+      setMessage(null);
     }
   }, [user, isAuthenticated]);
 
@@ -98,7 +108,7 @@ const useCustomers = (user, isAuthenticated) => {
       });
     } catch (err) {
       console.error('Error al añadir cliente:', err);
-      setError(err.message);
+      setMessage(err.message);
     }
   };
 
@@ -132,7 +142,7 @@ const useCustomers = (user, isAuthenticated) => {
       });
     } catch (err) {
       console.error('Error al modificar cliente:', err);
-      setError(err.message);
+      setMessage(err.message);
     }
   };
 
@@ -153,7 +163,7 @@ const useCustomers = (user, isAuthenticated) => {
       setCustomers(customers.filter((c) => c._id !== id));
     } catch (err) {
       console.error('Error al eliminar cliente:', err);
-      setError(err.message);
+      setMessage(err.message);
     }
   };
 
@@ -172,7 +182,7 @@ const useCustomers = (user, isAuthenticated) => {
 
   return {
     customers,
-    error,
+    message,
     isEditing,
     currentCustomer,
     formData,
@@ -185,3 +195,5 @@ const useCustomers = (user, isAuthenticated) => {
 };
 
 export default useCustomers;
+
+

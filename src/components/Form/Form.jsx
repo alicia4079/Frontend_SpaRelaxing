@@ -27,9 +27,9 @@ const Form = ({ onSubmit }) => {
           <input
             {...register('userName', {
               required: 'El nombre de usuario es obligatorio',
-              pattern: {
-                value: /^[a-zA-Z0-9]{3,}$/,
-                message: 'El nombre de usuario debe tener al menos 3 caracteres y puede contener letras y números.'
+             pattern: { 
+            value: /^[a-zA-Z0-9._-]{3,20}$/, 
+             message: 'El nombre de usuario debe tener entre 3 y 20 caracteres y solo puede contener letras, números, ,puntos, guiones o guiones bajos.' 
               }
             })}
             type="text"
