@@ -1,0 +1,11 @@
+.exclusive-content {
+  padding: var(--rtc-padding-xs);
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+}
+
+iframe {
+  width: 100%;
+  border: none;
+}

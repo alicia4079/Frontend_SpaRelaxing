@@ -1,15 +1,16 @@
+#spas {
+  padding: var(--rtc-margin-s);
+  min-height: 70svh;
+  width: 78svw;
+  text-align: center;
+}
+
 #spas h2 {
   font-size: 50px;
   font-weight: 500;
   color: var(--bg-400);
   margin: var(--rtc-margin-s);
   text-shadow: 2px 2px 5px var(--bg-600);
-}
-#spas {
-  padding: var(--rtc-margin-s);
-  min-height: 70svh;
-  width: 78svw;
-  text-align: center;
 }
 
 .spa-grid {
@@ -24,7 +25,9 @@
   border-radius: 10px;
   overflow: hidden;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  background-color: var(--bg-200);
+  background-color: white;
+  transition: background-color 0.3s ease;
+  position: relative;
 }
 
 .spa-card h3 {
@@ -36,6 +39,7 @@
   font-size: 1rem;
   color: var(--text-200);
 }
+
 .spa-image-container {
   width: 100%;
   height: 150px;
@@ -44,6 +48,7 @@
   justify-content: center;
   align-items: center;
   cursor: pointer;
+  position: relative;
 }
 
 .spa-image {
@@ -55,6 +60,30 @@
 
 .spa-card:hover .spa-image {
   transform: scale(1.05);
+}
+
+.favorite-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 24px;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  padding: 0;
+  z-index: 1;
+}
+
+.favorite-btn .gold-star {
+  color: gold;
+}
+
+.favorite-btn .grey-star {
+  color: grey;
+}
+
+.spa-card.favorite {
+  background-color: #ffed86e0;
 }
 
 @media (max-width: 1000px) {

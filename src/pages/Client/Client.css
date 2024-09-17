@@ -1,30 +1,51 @@
-.client-continent-costumer {
-  font-size: 20px;
+.client-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--rtc-gap-m);
   min-height: 83svh;
-  display: flex;
-  text-align: center;
-  margin: 5px 5px;
-  cursor: pointer;
-  gap: var(--rtc-gap-xs);
-  background-color: var(--bg-100);
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  padding: var(--rtc-padding-xs);
-  text-align: center;
-  justify-content: center;
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: column;
-  flex: 1;
   margin: 15px 5px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 5);
-  transition: 0.5s;
+}
+
+.formAdmin button {
   cursor: pointer;
 }
 
-.client-continent-costumer h2 {
+.client-data {
+  flex: 1;
+  text-align: center;
+  background-color: var(--bg-100);
+  border: 1px solid black;
+  border-radius: 8px;
+  padding: var(--rtc-padding-xs);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: box-shadow 0.5s;
+}
+
+.client-data:hover {
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+.client-data p {
+  font-size: 20px;
+  margin: 2px 0;
+}
+
+.client-data h2 {
   color: var(--bg-400);
   text-shadow: 2px 2px 2px var(--bg-600);
+}
+
+.exclusive-content-container {
+  flex: 1;
+  min-height: 50%;
+  max-width: 400px;
+  background-color: var(--bg-100);
+  text-align: center;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: var(--rtc-padding-xs);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .spa-container {
@@ -37,13 +58,13 @@
 
 .no-costumer-alert {
   display: flex;
-  margin: 0 var(--rtc-margin-l);
   flex-direction: column;
-  min-height: 85svh;
   justify-content: center;
   align-items: center;
   text-align: center;
-  gap: 20px;
+  gap: var(--rtc-gap-s);
+  margin: 0 var(--rtc-margin-l);
+  min-height: 85svh;
 }
 
 .no-costumer-alert h2 {
@@ -55,10 +76,62 @@
   color: var(--primary-200);
   font-weight: 400;
   cursor: pointer;
-  transition: 0.8s;
+  transition: transform 0.8s;
 }
+
 .no-costumer-alert a:hover {
-  scale: 1.2;
+  transform: scale(1.2);
+}
+
+.client-buttons button,
+.aditional-services button {
+  color: var(--green);
+  border-radius: var(--rtc-border-radius);
+  padding: var(--rtc-padding-xs);
+  font-weight: 600;
+  background-color: var(--bg-100);
+  cursor: pointer;
+  margin: 0.5px 0;
+}
+
+.client-data-item {
+  border-bottom: 1px solid black;
+  padding: var(--rtc-padding-xs);
+  transition: padding 0.3s ease-in-out;
+}
+
+.client-data-item div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.notification {
+  text-align: center;
+  width: 300px;
+  color: var(--green);
+  margin: var(--rtc-margin-xs);
+}
+
+.passwordButton,
+.formAdmin button {
+  background-color: var(--bg-300);
+  border-radius: var(--rtc-border-radius);
+  padding: var(--rtc-padding-xs);
+  margin: var(--rtc-margin-xs);
+  cursor: pointer;
+  color: black;
+  font-weight: bold;
+}
+.formAdmin button {
+  padding: 2px;
+  margin: 0;
+}
+
+@media (max-width: 900px) {
+  .client-container {
+    flex-direction: column;
+  }
 }
 
 @media (max-width: 500px) {
@@ -71,12 +144,6 @@
   .no-costumer-alert a {
     font-size: 22px;
     font-weight: 600;
-  }
-  .client-continent-costumer {
-    padding: var(--rtc-padding-xs);
-  }
-  .client-data {
-    padding: var(--rtc-padding-m);
   }
   .client-data p {
     font-size: 18px;
