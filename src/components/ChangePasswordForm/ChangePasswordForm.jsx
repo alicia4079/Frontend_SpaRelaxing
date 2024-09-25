@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { useAuth } from '../../customHooks/AuthContext';
+import { fetchService } from '../fetchService';
+
 
 const ChangePasswordForm = ({ onClose }) => {
   const { user } = useAuth();
@@ -22,38 +24,26 @@ const ChangePasswordForm = ({ onClose }) => {
     }
 
     try {
-      const response = await fetch(`https://backend-spas.vercel.app/api/v1/users/${user._id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${user.token}`,
-        },
-        body: JSON.stringify({ currentPassword, newPassword }),
-      });
+      const response = await fetchService(`/users/${user._id}`, 'PUT', { currentPassword, newPassword }, user.token);
 
-      const data = await response.json();
-
-      if (response.ok) {
+      if (response) { 
         setNotification('Contraseña actualizada correctamente.');
         setCurrentPassword('');
         setNewPassword('');
-        setPasswordError(''); 
-        
+        setPasswordError('');
+
         setTimeout(() => {
           if (onClose) onClose(); 
-        }, 3000); 
-      } else {
-        if (data.message === 'La nueva contraseña no puede ser igual a la actual') {
-          setPasswordError('La nueva contraseña no puede ser igual a la actual.');
-        } else if (data.message === 'La contraseña actual es incorrecta') {
-          setPasswordError('La contraseña actual es incorrecta.');
-        } else {
-          setPasswordError(data.message || 'Error al cambiar la contraseña.');
-        }
+        }, 3000);
       }
     } catch (error) {
-      console.error('Error al cambiar la contraseña:', error);
-      setPasswordError('Error de red al cambiar la contraseña.');
+      if (error.message === 'La nueva contraseña no puede ser igual a la actual') {
+        setPasswordError('La nueva contraseña no puede ser igual a la actual.');
+      } else if (error.message === 'La contraseña actual es incorrecta') {
+        setPasswordError('La contraseña actual es incorrecta.');
+      } else {
+        setPasswordError(error.message || 'Error al cambiar la contraseña.');
+      }
     }
   };
 
@@ -84,7 +74,6 @@ const ChangePasswordForm = ({ onClose }) => {
 };
 
 export default ChangePasswordForm;
-
 
 
 

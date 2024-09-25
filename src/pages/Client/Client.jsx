@@ -27,7 +27,7 @@ const Client = () => {
   const [notification, setNotification] = useState(null);
   const [confirmedServices, setConfirmedServices] = useState({});
   const [isChangingPassword, setIsChangingPassword] = useState(false);
-
+  
   useEffect(() => {
     setCustomersState(customers);
   }, [customers]);
@@ -62,6 +62,14 @@ const Client = () => {
       }
     } else {
       setNotification(`${service} ya ha sido añadido.`);
+    }
+  };
+
+  const handleEditClickWrapper = (customer) => {
+    handleEditClick(customer);
+    const formElement = document.getElementById('customer-form');
+    if (formElement) {
+      formElement.scrollIntoView({ behavior: 'smooth' });
     }
   };
 
@@ -104,7 +112,7 @@ const Client = () => {
         <h2>{user.rol === 'admin' ? 'Datos de todos los clientes' : 'Tus datos'}</h2>
 
         {user.rol === 'admin' && (
-          <div>
+          <div id="customer-form">
             <h3>{isEditing ? 'Editar Cliente' : 'Añadir Cliente'}</h3>
             <form className='formAdmin' onSubmit={isEditing ? handleEditCustomer : handleAddCustomer}>
               <input type="text" name="fullName" value={formData.fullName} onChange={handleFormChange} placeholder="Nombre Completo" required />
@@ -155,7 +163,7 @@ const Client = () => {
                 <div className='client-buttons'>
                   {user.rol === 'admin' && (
                     <>
-                      <button onClick={() => handleEditClick(customer)}>Editar</button>
+                      <button onClick={() => handleEditClickWrapper(customer)}>Editar</button>
                       <button onClick={() => handleDeleteCustomer(customer._id)}>Eliminar</button>
                     </>
                   )}
@@ -190,6 +198,9 @@ const Client = () => {
 };
 
 export default Client;
+
+
+
 
 
 

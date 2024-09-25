@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import { useAuth } from './AuthContext';
+import { fetchService } from '../components/fetchService';
+
 
 const useLoginHandler = () => {
   const { login } = useAuth();  
@@ -8,23 +10,11 @@ const useLoginHandler = () => {
 
   const handleLogin = async (data) => {
     try {
-      const response = await fetch('https://backend-spas.vercel.app/api/v1/users/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-      });
+      const response = await fetchService('/users/login', 'POST', data);
   
-      if (!response.ok) {
-        const errorResult = await response.json();
-        throw new Error(errorResult.message || 'Error en la solicitud de inicio de sesión');
-      }
+      console.log('Inicio de sesión exitoso:', response);
   
-      const result = await response.json(); 
-      console.log('Inicio de sesión exitoso:', result);
-  
-      const { token, user } = result;
+      const { token, user } = response;
   
       if (token) {
         localStorage.setItem('token', token);
@@ -47,7 +37,5 @@ const useLoginHandler = () => {
 };
 
 export default useLoginHandler;
-
-
 
 

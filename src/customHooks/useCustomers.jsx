@@ -1,4 +1,6 @@
 import { useState, useEffect } from 'react';
+import { fetchService } from '../components/fetchService';
+
 
 const useCustomers = (user, isAuthenticated) => {
   const [customers, setCustomers] = useState([]);
@@ -28,34 +30,39 @@ const useCustomers = (user, isAuthenticated) => {
         }
 
         const isAdmin = user.rol === 'admin';
-        const url = isAdmin
-          ? 'https://backend-spas.vercel.app/api/v1/costumers'
-          : `https://backend-spas.vercel.app/api/v1/costumers/email/${user.email}`;
 
-        const response = await fetch(url, {
-          headers: {
-            'Authorization': `Bearer ${token}`,
-          },
-        });
-
-        if (!response.ok) {
-          const errorText = await response.text();
-          if (response.status === 404 && errorText.includes('Cliente no encontrado')) {
-            setMessage('Aún no tienes ningún paquete contratado.');
-            setCustomers([]);
-            return;
+        if (isAdmin) {
+          try {
+            const customerResult = await fetchService('/costumers', 'GET');
+            setCustomers(Array.isArray(customerResult) ? customerResult : [customerResult]);
+          } catch (error) {
+            if (error.message.includes('404') || error.message.includes('Cliente no encontrado')) {
+              console.log('Clientes no encontrados en costumers. Buscando en users...');
+              const userResult = await fetchService('/users', 'GET');
+              setCustomers([userResult]);
+            } else {
+              throw error;
+            }
           }
-          throw new Error(`Error al obtener los datos del cliente: ${errorText}`);
+        } else {
+          const customerEndpoint = `/costumers/email/${user.email}`;
+
+          try {
+            const customerResult = await fetchService(customerEndpoint, 'GET');
+            setCustomers(Array.isArray(customerResult) ? customerResult : [customerResult]);
+          } catch (error) {
+            if (error.message.includes('404') || error.message.includes('Cliente no encontrado')) {
+              setMessage('Aún no tienes ningún paquete contratado.');
+              setCustomers([]);
+            } else {
+              throw error;
+            }
+          }
         }
 
-        const customerResult = await response.json();
-        setCustomers(Array.isArray(customerResult) ? customerResult : [customerResult]);
         setMessage(null);
-
       } catch (err) {
-        if (!err.message.includes('Cliente no encontrado')) {
-          console.error('Error en la solicitud:', err);
-        }
+        console.error('Error en la solicitud:', err);
         setMessage(err.message || 'Error desconocido al obtener los datos del cliente');
       }
     };
@@ -82,22 +89,8 @@ const useCustomers = (user, isAuthenticated) => {
         throw new Error('Token no encontrado');
       }
 
-      const response = await fetch('https://backend-spas.vercel.app/api/v1/costumers', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`,
-        },
-        body: JSON.stringify(formData),
-      });
-
-      if (!response.ok) {
-        const errorText = await response.text();
-        throw new Error(`Error ${response.status}: ${errorText}`);
-      }
-
-      const newCustomer = await response.json();
-      setCustomers([...customers, newCustomer]);
+      const response = await fetchService('/costumers', 'POST', formData);
+      setCustomers([...customers, response]);
       setFormData({
         fullName: '',
         ID: '',
@@ -116,20 +109,11 @@ const useCustomers = (user, isAuthenticated) => {
     e.preventDefault();
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch(`https://backend-spas.vercel.app/api/v1/costumers/${currentCustomer._id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`,
-        },
-        body: JSON.stringify(formData),
-      });
-
-      if (!response.ok) {
-        throw new Error('Error al modificar el cliente');
+      if (!token) {
+        throw new Error('Token no encontrado');
       }
 
-      const updatedCustomer = await response.json();
+      const updatedCustomer = await fetchService(`/costumers/${currentCustomer._id}`, 'PUT', formData);
       setCustomers(customers.map((c) => (c._id === updatedCustomer._id ? updatedCustomer : c)));
       setIsEditing(false);
       setFormData({
@@ -149,17 +133,11 @@ const useCustomers = (user, isAuthenticated) => {
   const handleDeleteCustomer = async (id) => {
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch(`https://backend-spas.vercel.app/api/v1/costumers/${id}`, {
-        method: 'DELETE',
-        headers: {
-          'Authorization': `Bearer ${token}`,
-        },
-      });
-
-      if (!response.ok) {
-        throw new Error('Error al eliminar el cliente');
+      if (!token) {
+        throw new Error('Token no encontrado');
       }
 
+      await fetchService(`/costumers/${id}`, 'DELETE');
       setCustomers(customers.filter((c) => c._id !== id));
     } catch (err) {
       console.error('Error al eliminar cliente:', err);
@@ -195,5 +173,3 @@ const useCustomers = (user, isAuthenticated) => {
 };
 
 export default useCustomers;
-
-

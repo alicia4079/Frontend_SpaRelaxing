@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import useLoginHandler from '../../customHooks/useLoginHandler';
 import './Register.css';
+import { fetchService } from '../../components/fetchService';
 
 const Register = () => {
   const { register, handleSubmit, formState: { errors } } = useForm();
@@ -13,21 +14,7 @@ const Register = () => {
 
   const handleRegister = async (data) => {
     try {
-      const registerResponse = await fetch('https://backend-spas.vercel.app/api/v1/users/register', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-      });
-
-      const registerResultText = await registerResponse.text();
-
-      if (!registerResponse.ok) {
-        throw new Error(registerResultText);
-      }
-
-      const registerResult = JSON.parse(registerResultText);
+      const registerResponse = await fetchService('/users/register', 'POST', data);
 
       await handleLogin({ userName: data.userName, password: data.password });
 
@@ -53,10 +40,13 @@ const Register = () => {
             <input
               type="text"
               id="userName"
-              {...register('userName', {  required: 'El nombre de usuario es obligatorio',
+              {...register('userName', {  
+                required: 'El nombre de usuario es obligatorio',
                 pattern: { 
                   value: /^[a-zA-Z0-9._-]{3,20}$/, 
-                  message: 'El nombre de usuario debe tener entre 3 y 20 caracteres y solo puede contener letras, números, ,puntos, guiones o guiones bajos'  } })}
+                  message: 'El nombre de usuario debe tener entre 3 y 20 caracteres y solo puede contener letras, números, puntos, guiones o guiones bajos'  
+                } 
+              })}
             />
             {errors.userName && <p className="error-message">{errors.userName.message}</p>}
           </div>
@@ -94,7 +84,6 @@ const Register = () => {
 };
 
 export default Register;
-
 
 
 

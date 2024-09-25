@@ -1,11 +1,13 @@
 import React from 'react'
 import './Fares.css'
+import { Link } from 'react-router-dom'
 
 
 const Fares = () => {
   return (
 <div className="client-continent no-register">
-  <h2>Elige uno de nuestros packs</h2>
+  <h2>Todos nuestros packs</h2>
+  <p className='info-contact'>Para contratar un pack consulta nuestros datos de contacto <Link to="/contact">aquí</Link> </p>
   <div className="price-columns">
     <div className="price-column">
       <h3>Plan Básico</h3>

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './Contact.css';
 import Loading from '../../components/Loading/Loading';
+import { fetchService } from '../../components/fetchService';
 
 const Contact = () => {
   const [spas, setSpas] = useState([]);
@@ -10,14 +11,10 @@ const Contact = () => {
   useEffect(() => {
     const fetchSpas = async () => {
       try {
-        const response = await fetch('https://backend-spas.vercel.app/api/v1/spas');
-        if (!response.ok) {
-          throw new Error('Error al obtener los spas');
-        }
-        const data = await response.json();
-        setSpas(data);
+        const data = await fetchService('/spas', 'GET'); 
+        setSpas(data); 
       } catch (error) {
-        setError(error.message);
+        setError(error.message); 
       } finally {
         setLoading(false); 
       }
@@ -37,7 +34,8 @@ const Contact = () => {
   return (
     <div className='contact-container'>
       <div className='continent-img'>
-      <img src="/toallas.jpg" alt="toallas" /><img src="/geotermal.jpg" alt="terapia geotermal" />
+        <img src="/toallas.jpg" alt="toallas" />
+        <img src="/geotermal.jpg" alt="terapia geotermal" />
       </div>
       <div className='contact-information'>
         {spas.map(spa => (
@@ -51,9 +49,13 @@ const Contact = () => {
           </div>
         ))}
       </div>
-      <div className='continent-img'><img src="/chica_piscina.jpg" alt="chica en piscina" /><img src="/masaje.jpg" alt="masaje" /></div>
+      <div className='continent-img'>
+        <img src="/chica_piscina.jpg" alt="chica en piscina" />
+        <img src="/masaje.jpg" alt="masaje" />
+      </div>
     </div>
   );
 };
 
 export default Contact;
+

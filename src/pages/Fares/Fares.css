@@ -11,10 +11,18 @@
   text-shadow: 2px 2px 5px var(--bg-600);
 }
 
+.info-contact {
+  padding-left: var(--rtc-padding-xs);
+}
+
+.info-contact a {
+  color: var(--primary-200);
+  font-weight: 700;
+}
+
 .price-columns {
   display: flex;
   flex-wrap: wrap;
-  margin-top: 20px;
   justify-content: center;
 }
 
@@ -31,7 +39,6 @@
   flex: 1;
   margin: 15px 5px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  cursor: pointer;
   gap: 20px;
   min-width: 200px;
   max-width: 300px;

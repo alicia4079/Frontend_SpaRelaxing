@@ -1,4 +1,6 @@
 import { useState, useEffect } from 'react';
+import { fetchService } from '../components/fetchService';
+
 
 const useSpas = () => {
   const [spas, setSpas] = useState([]);
@@ -7,11 +9,7 @@ const useSpas = () => {
   useEffect(() => {
     const fetchSpas = async () => {
       try {
-        const response = await fetch('https://backend-spas.vercel.app/api/v1/spas');
-        if (!response.ok) {
-          throw new Error('Error al obtener los spas');
-        }
-        const spasResult = await response.json();
+        const spasResult = await fetchService('/spas', 'GET'); 
         setSpas(spasResult);
       } catch (err) {
         console.error('Error en la solicitud de spas:', err);

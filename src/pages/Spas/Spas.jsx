@@ -4,6 +4,8 @@ import React, { useEffect, useState } from 'react';
 import { FaStar } from 'react-icons/fa'; 
 import Loading from '../../components/Loading/Loading';
 import { useAuth } from '../../customHooks/AuthContext'; 
+import { fetchService } from '../../components/fetchService';
+
 
 const Spas = () => {
   const [spas, setSpas] = useState([]);
@@ -14,11 +16,7 @@ const Spas = () => {
   useEffect(() => {
     const fetchSpas = async () => {
       try {
-        const response = await fetch('https://backend-spas.vercel.app/api/v1/spas');
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const data = await response.json();
+        const data = await fetchService('/spas');
         setSpas(data);
       } catch (error) {
         console.error('Error al obtener los spas:', error);
@@ -90,4 +88,5 @@ const Spas = () => {
 };
 
 export default Spas;
+
 
